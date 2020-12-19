@@ -1,0 +1,14 @@
+.Sidebar{
+    flex: 0.25;
+}
+.Sidebar button{
+    margin-left: 60px;
+    padding: 10px;
+    background-color: #1A91DA;
+    color: white;
+    font-weight: 700;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    width: 90px;
+}
