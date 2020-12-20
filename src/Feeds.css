@@ -50,6 +50,9 @@
     transition: 100ms ease-in-out;
     margin-right: 10vh;
 }
+.tweetButton:hover{
+    background-color: #1A91DA;
+}
 .inputFooter{
     display: flex;
     flex-direction: row;
