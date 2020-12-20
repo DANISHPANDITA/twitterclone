@@ -1,0 +1,58 @@
+.Feeds{
+    flex: 0.5;
+    border-left: 1px solid rgb(228, 228, 228);
+    border-right: 1px solid rgb(228, 228, 228);
+    height: 100vh;
+}
+.top{
+    position: sticky;
+}
+.top h3{
+    font-size: 20px;
+    font-weight: 900;
+    margin-left: 10px;
+}
+.tweetWrite{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 15px;
+}
+.tweetWrite .input{
+    flex: 0.95;
+    margin-left: 15px;
+    outline: none;
+    height: 5vh;
+    border: none;
+    font-size: 20px;
+    font-family: 'calibri';
+    color: grey;
+}
+.inputButtons{
+    color: #1DA1F2;
+    height: 22px !important;
+    width: auto !important;
+}
+.inputs{
+    padding-left: 10vh;
+}
+.tweetButton{
+    cursor: pointer;
+    padding: 10px;
+    background-color: #348bc2;
+    color: white;
+    font-weight: 700;
+    outline: none;
+    border: none;
+    border-radius: 30px;
+    width: 20%;
+    height:6vh;
+    transition: 100ms ease-in-out;
+    margin-right: 10vh;
+}
+.inputFooter{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}

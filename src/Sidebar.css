@@ -1,14 +1,27 @@
 .Sidebar{
-    flex: 0.25;
+    flex: 0.2;
+}
+.twittericon{
+    margin-top: 15px;
+    padding-left: 30px;
+    width: 35px !important;
+    height: auto !important;
+    color: #1DA1F2;
 }
 .Sidebar button{
-    margin-left: 60px;
+    cursor: pointer;
     padding: 10px;
-    background-color: #1A91DA;
+    background-color: #348bc2;
     color: white;
     font-weight: 700;
     outline: none;
     border: none;
-    border-radius: 20px;
-    width: 90px;
+    border-radius: 30px;
+    width: 70%;
+    height:6vh;
+    margin-top: 3vh;
+    transition: 100ms ease-in-out;
+}
+.Sidebar button:hover{
+    background-color: #1A91DA;
 }
