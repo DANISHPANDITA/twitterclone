@@ -56,3 +56,10 @@ margin-right: 5%;
     height: 18px !important;
     color: #4e4e4e;
 }
+.verifiedIcon{
+    color: #1DA1F2;
+    height: 16px !important;
+}
+.timestamp{
+    margin-left: 2%;
+}

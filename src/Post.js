@@ -5,26 +5,30 @@ import {
   LoopRounded,
   MoreHorizRounded,
   PublishRounded,
+  VerifiedUser,
 } from "@material-ui/icons";
 import React from "react";
 import "./Post.css";
 function Post({
-  username,
+  post,
   displayname,
   avatar,
   timestamp,
-  verified,
-  post,
   tweet,
+  username,
+  verified,
 }) {
   return (
     <div className="Post">
       <div className="postHeader">
         <div className="leftHeader">
-          <Avatar className="postAvatar" src={avatar} alt="" />
+          <Avatar className="postAvatar" src={avatar} alt="Cant show" />
           <h4>{displayname}</h4>
+          {verified === "true" && <VerifiedUser className="verifiedIcon" />}
           <p>@{username}</p>
-          <p>{timestamp}</p>
+          <p className="timestamp">
+            {new Date(timestamp?.toDate()).toTimeString().slice(0, 8)}
+          </p>
         </div>
         <div className="rightHeader">
           <IconButton>

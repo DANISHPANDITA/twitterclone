@@ -6,20 +6,37 @@ import {
   PollRounded,
   SentimentSatisfiedRounded,
 } from "@material-ui/icons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Feeds.css";
 import Picker from "emoji-picker-react";
 import Post from "./Post";
+import { db, storage } from "./firebase";
+import firebase from "firebase";
 
 function Feeds() {
   const [TextInput, setTextInput] = useState("");
   const [image, setimage] = useState("");
   const [chosenEmoji, setChosenEmoji] = useState("");
   const [sate, setsate] = useState(false);
+  const [Tweets, setTweets] = useState([]);
+  const [progress, setprogress] = useState("");
 
   const picker = () => {
     setsate(true);
   };
+
+  useEffect(() => {
+    db.collection("Twitter")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) =>
+        setTweets(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            tweet: doc.data(),
+          }))
+        )
+      );
+  }, []);
 
   function buildFileSelector() {
     const fileSelector = document.createElement("input");
@@ -33,7 +50,7 @@ function Feeds() {
     const fileSelector = buildFileSelector();
     fileSelector.click();
     fileSelector.addEventListener("change", (event) => {
-      const file = event.target.files;
+      const file = event.target.files[0];
       setimage(file);
     });
   };
@@ -49,10 +66,55 @@ function Feeds() {
     const gifSelector = buildGifSelector();
     gifSelector.click();
     gifSelector.addEventListener("change", (event) => {
-      const file = event.target.files;
-      console.log(file);
+      const file = event.target.files[0];
+      setimage(file);
     });
   };
+  const handleWrittenTweet = (e) => {
+    e.preventDefault();
+    if (image) {
+      const uploadTask = storage.ref(`image/${image}.name}`).put(image);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          var progress = Math.floor(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          console.log("Upload is " + progress + "% done");
+          setprogress(progress);
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED:
+              console.log("Upload is paused");
+              break;
+            case firebase.storage.TaskState.RUNNING:
+              console.log("Upload is running");
+              break;
+            default:
+              console.log("..");
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            db.collection("Twitter").add({
+              tweet: TextInput,
+              displayname: "Danish",
+              username: "Pandita",
+              avatar:
+                "https://lh3.googleusercontent.com/ogw/ADGmqu-lOEQqtZzqvcw_1RkjqPW-2oQmxEsLh8aDRXhn9w=s83-c-mo",
+              verified: "true",
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+              post: downloadURL,
+            });
+          });
+        }
+      );
+      setTextInput("");
+    }
+  };
+
   const onEmojiClick = (event, emojiObject) => {
     setChosenEmoji(emojiObject.emoji);
     setTextInput(TextInput.concat(chosenEmoji));
@@ -111,10 +173,7 @@ function Feeds() {
 
               <button
                 disabled={!TextInput}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setTextInput("");
-                }}
+                onClick={handleWrittenTweet}
                 className="tweetButton"
               >
                 Tweet
@@ -131,24 +190,18 @@ function Feeds() {
         </form>
       </div>
       <div className="post">
-        <Post
-          post="https://cdn.eso.org/images/thumb300y/eso1907a.jpg"
-          username="Danish"
-          displayname="Pandita"
-          avatar="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
-          timestamp="3h"
-          verified="false"
-          tweet="First tweet in clone app feeling excited....Yeah"
-        />
-        <Post
-          post="https://static.toiimg.com/photo/72975551.cms"
-          username="Danish"
-          displayname="Pandita"
-          avatar="https://i.pinimg.com/originals/ca/76/0b/ca760b70976b52578da88e06973af542.jpg"
-          timestamp="9h"
-          verified="false"
-          tweet="Making something"
-        />
+        {Tweets.map(({ id, tweet }) => (
+          <Post
+            key={id}
+            post={tweet.post}
+            displayname={tweet.displayname}
+            avatar={tweet.avatar}
+            timestamp={tweet.timestamp}
+            tweet={tweet.tweet}
+            username={tweet.username}
+            verified={tweet.verified}
+          />
+        ))}
       </div>
     </div>
   );
