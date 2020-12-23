@@ -1,4 +1,36 @@
 .Widgets{
+    margin-top: 0.5vh;
     flex: 0.3;
     height: 100vh;
+    margin-left: 2vw;
+}
+.widgetSide{
+    display: flex;
+    flex-direction: column;
+}
+.WidgetInput{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.WidgetInput input{
+    background-color: #EBEEF0;
+    width: 80%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+}
+.SearchIcon{
+    position: absolute;
+    padding: 5px;
+    min-width: 40px;
+}
+.whatsHappening{
+    margin-left: 2vw;
+    width: 80%;
+    border-bottom: 1px solid #4e4e4e;
 }

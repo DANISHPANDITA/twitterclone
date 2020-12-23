@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import "./Feeds.css";
 import Picker from "emoji-picker-react";
+import Post from "./Post";
 
 function Feeds() {
   const [TextInput, setTextInput] = useState("");
@@ -33,7 +34,7 @@ function Feeds() {
     fileSelector.click();
     fileSelector.addEventListener("change", (event) => {
       const file = event.target.files;
-      console.log(file);
+      setimage(file);
     });
   };
 
@@ -61,7 +62,8 @@ function Feeds() {
     <div className="Feeds">
       <div className="top">
         <h3>Home</h3>
-        <hr />
+      </div>
+      <div>
         <form>
           <div className="tweetArea">
             <div className="tweetWrite">
@@ -127,6 +129,26 @@ function Feeds() {
             />
           )}
         </form>
+      </div>
+      <div className="post">
+        <Post
+          post="https://cdn.eso.org/images/thumb300y/eso1907a.jpg"
+          username="Danish"
+          displayname="Pandita"
+          avatar="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
+          timestamp="3h"
+          verified="false"
+          tweet="First tweet in clone app feeling excited....Yeah"
+        />
+        <Post
+          post="https://static.toiimg.com/photo/72975551.cms"
+          username="Danish"
+          displayname="Pandita"
+          avatar="https://i.pinimg.com/originals/ca/76/0b/ca760b70976b52578da88e06973af542.jpg"
+          timestamp="9h"
+          verified="false"
+          tweet="Making something"
+        />
       </div>
     </div>
   );
